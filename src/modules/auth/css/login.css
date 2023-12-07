@@ -1,0 +1,45 @@
+/* login.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  background-color: #009574;
+}
+
+.gradient-form {
+  height: 100%;
+}
+
+#pruebita2 {
+  background-color: #ffffff; /* Color de fondo del formulario */
+  border-radius: 10px; /* Ajusta el redondeo de las esquinas */
+}
+
+/* Ajustes para los inputs y botones del formulario de inicio de sesión */
+.form-outline {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.form-outline label {
+  font-size: 14px;
+}
+
+.form-outline input {
+  font-size: 14px;
+}
+
+.error-text {
+  color: red;
+  font-size: 14px;
+}
+
+.btn-hover {
+  width: 50%;
+  margin-top: 10px;
+}
