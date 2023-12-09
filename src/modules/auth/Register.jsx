@@ -1,37 +1,47 @@
-// Register.jsx
-
 import React from "react";
 import { useFormik } from "formik";
 import AxiosClient from "../../shared/plugins/axios";
 import Alert from "../../shared/plugins/alerts";
 import FeatherIcon from "feather-icons-react";
-import * as yup from "yup"; // Asegúrate de importar yup
+import * as yup from "yup";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import "./css/Register.css";
 
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-
-const RegisterForm = () => {
+export const RegisterForm = () => {
   const formik = useFormik({
     initialValues: {
-      fullName: "",
+      name: "",
       email: "",
       password: "",
+      role: 1,
     },
     validationSchema: yup.object().shape({
-      fullName: yup.string().required("Campo Obligatorio"),
-      email: yup
-        .string()
-        .email("Formato de correo no válido")
-        .required("Campo Obligatorio"),
-      password: yup.string().required("Campo Obligatorio"),
+      name: yup.string().required("Campo obligatorio"),
+      email: yup.string().required("Campo obligatorio"),
+      password: yup.string().required("Campo obligatorio"),
     }),
     onSubmit: async (values) => {
       try {
-        // Realiza la solicitud POST para registrar al usuario
-        const response = await AxiosClient.post("/api-sysstock/user", values);
+        // Imprimir el objeto values antes de enviar la solicitud
+        console.log("Datos a enviar:", values);
 
-        if (response.status === 201) {
-          // Si el usuario se registró con éxito, puedes mostrar un mensaje de éxito
+        let response = await AxiosClient.post(
+          "http://localhost:8080/api-sysstock/user/",
+          values,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        ).catch(error => {
+          console.error("Error en la solicitud Axios:", error);
+        });
+        
+
+        console.log("Respuesta del servidor:", response);
+
+        if (response.statusCode === 200) {
+          // Registro exitoso
           Alert.fire({
             title: "Registro Exitoso",
             text: "El usuario se registró correctamente.",
@@ -40,7 +50,7 @@ const RegisterForm = () => {
             confirmButtonText: "Aceptar",
           });
         } else {
-          // Si hubo algún problema con la solicitud, muestra un mensaje de error
+          // Error en el registro
           Alert.fire({
             title: "Error en el Registro",
             text: "Hubo un problema al registrar el usuario.",
@@ -50,8 +60,27 @@ const RegisterForm = () => {
           });
         }
       } catch (error) {
-        // Maneja los errores que puedan ocurrir durante la solicitud
+        // Manejo de errores
         console.error("Error al registrar al usuario:", error);
+
+        if (error.response) {
+          console.error("Error de servidor:", error.response.data);
+        } else if (error.request) {
+          console.error("No se recibió respuesta del servidor");
+        } else {
+          console.error(
+            "Error de configuración de la solicitud:",
+            error.message
+          );
+        }
+
+        Alert.fire({
+          title: "Error",
+          text: "Ocurrió un error al intentar registrar al usuario.",
+          icon: "error",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Aceptar",
+        });
       }
     },
   });
@@ -59,48 +88,37 @@ const RegisterForm = () => {
   return (
     <>
       <div>
-        <section className="h-100  gradient-form">
-          <Container >
-            <Row className="d-flex justify-content-center align-items-center h-100">
-              <Col className="col-xl-20">
-                <Card className="rounded-1 text-black" id="pruebita2">
-                  <Card.Body className="p-md mx-md-10">
+        <section className=" gradient-form">
+          <Container>
+            <Row className="d-flex justify-content-center align-items-center h-130">
+              <Col className="col-xl-70 h-100 w-100 d-flex align-items-center justify-content-center">
+                <Card
+                  className="rounded-1  text-black"
+                  id="pruebita2"
+                  style={{ height: "100%" , width:"100%"}}
+                >
+                  <Card.Body className="p-md mx-md-20 ">
                     <div className="text-center">
-                      {/* Ajusta el logo y otros elementos según tus necesidades */}
                       <div id="logo" className=""></div>
-                      <h2>¿Eres nuevo aquí?</h2>
-                      <h4>Regístrate para poder empezar a hacer uso de nuestro Sistema</h4>
+                      <h2 className="mb-3">¿Eres nuevo aquí?</h2>
+                      <h4 className="mb-5">
+                        Regístrate para poder empezar a hacer uso de nuestro
+                        Sistema
+                      </h4>
                     </div>
-
-                    <Form onSubmit={formik.handleSubmit}>
-                      <Form.Group className="form-outline mb-2">
-                        <Form.Control
-                          id="fullName"
-                          name="fullName"
-                          value={formik.values.fullName}
-                          onChange={formik.handleChange}
-                          className="form-control-sm"
-                          style={{ width: "300px" }}
-                        />
-                        <Form.Label htmlFor="fullName">
-                          Nombre Completo:
-                        </Form.Label>
-                        {formik.errors.fullName && (
-                          <span className="error-text">
-                            {formik.errors.fullName}
-                          </span>
-                        )}
-                      </Form.Group>
-
-                      <Form.Group className="form-outline mb-2">
+                    <Form
+                      onSubmit={formik.handleSubmit}
+                      className="d-flex flex-column align-items-center"
+                    >
+                      <Form.Group className="form-outline ">
                         <Form.Control
                           placeholder="20213TN065@Utez.edu.mx"
                           id="email"
                           name="email"
                           value={formik.values.email}
                           onChange={formik.handleChange}
-                          className="form-control-sm"
-                          style={{ width: "300px" }}
+                          className="form-control-sm "
+                          style={{ width: "400px" }}
                         />
                         <Form.Label htmlFor="email">
                           Correo Electrónico:
@@ -112,7 +130,25 @@ const RegisterForm = () => {
                         )}
                       </Form.Group>
 
-                      <Form.Group className="form-outline mb-2">
+                      <Form.Group className="form-outline mb-1">
+                        <Form.Control
+                          placeholder="Nombre"
+                          id="name"
+                          name="name"
+                          value={formik.values.name}
+                          onChange={formik.handleChange}
+                          className="form-control-sm "
+                          style={{ width: "400px" }}
+                        />
+                        <Form.Label htmlFor="name">Nombre:</Form.Label>
+                        {formik.errors.name && (
+                          <span className="error-text">
+                            {formik.errors.name}
+                          </span>
+                        )}
+                      </Form.Group>
+
+                      <Form.Group className="form-outline mb-3">
                         <Form.Control
                           placeholder="**********"
                           id="password"
@@ -120,8 +156,8 @@ const RegisterForm = () => {
                           type="password"
                           value={formik.values.password}
                           onChange={formik.handleChange}
-                          className="form-control-sm"
-                          style={{ width: "300px" }}
+                          className="form-control-sm "
+                          style={{ width: "400px" }}
                         />
                         <Form.Label htmlFor="password">Contraseña:</Form.Label>
                         {formik.errors.password && (
@@ -131,30 +167,11 @@ const RegisterForm = () => {
                         )}
                       </Form.Group>
 
-                      <Form.Group className="form-outline mb-2">
-                        <Form.Control
-                          placeholder="**********"
-                          id="password"
-                          name="password"
-                          type="password"
-                          value={formik.values.password}
-                          onChange={formik.handleChange}
-                          className="form-control-sm"
-                          style={{ width: "300px" }}
-                        />
-                        <Form.Label htmlFor="password">Confirmar Contraseña:</Form.Label>
-                        {formik.errors.password && (
-                          <span className="error-text">
-                            {formik.errors.password}
-                          </span>
-                        )}
-                      </Form.Group>
-
-                      <Form.Group className="form-outlile mb-2">
-                        <div className="text-center pt-1 pb-1">
+                      <Form.Group className="form-outlile mb-5">
+                        <div className="text-center  pb-1">
                           <Button
                             variant="secondary"
-                            className="btn-hover gradient-custom-1"
+                            className="btn-hover gradient-custom-3"
                             type="submit"
                             disabled={!(formik.isValid && formik.dirty)}
                           >

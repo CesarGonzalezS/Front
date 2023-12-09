@@ -8,7 +8,7 @@ const requestHandler = (request) => {
   request.headers["Accept"] = "application/json";
   request.headers["Content-Type"] = "application/json";
   //cambiar a user en caso de que no funcione
-  const session = JSON.parse(localStorage.getItem("responsable") || null);
+  const session = JSON.parse(localStorage.getItem("user") || null);
   if (session?.isLogged)
     request.headers["Authorization"] = `Bearer ${session.token}`;
   return request;

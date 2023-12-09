@@ -6,7 +6,7 @@ export const IndexScreen = () => {
     // Simulamos el cambio de ruta después de un tiempo (puedes ajustar el tiempo según tus necesidades)
     const timeoutId = setTimeout(() => {
       window.location.href = "/auth"; // Redirige a la página de inicio de sesión
-    }, 5000);
+    }, 30);
 
     // Limpieza del temporizador para evitar fugas de memoria
     return () => clearTimeout(timeoutId);
