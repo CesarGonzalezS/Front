@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "./authContext";
 import * as yup from "yup";
+import { AxiosClientWithInterceptors, AxiosClientWithoutInterceptors } from '../../shared/plugins/axios';
+
 import AxiosClient from "../../shared/plugins/axios";
 import Alert from "../../shared/plugins/alerts";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
@@ -35,7 +37,7 @@ export const LoginScreen = ({ onForgotPasswordClick }) => {
     }),
     onSubmit: async (values) => {
       try {
-        let response = await AxiosClient.post(
+        let response = await AxiosClientWithInterceptors.post(
           "http://localhost:8080/api-sysstock/auth/login",
           values
         );

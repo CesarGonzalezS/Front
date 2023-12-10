@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import AxiosClient from "../../shared/plugins/axios";
+import { AxiosClientWithInterceptors, AxiosClientWithoutInterceptors } from '../../shared/plugins/axios';
 import Alert from "../../shared/plugins/alerts";
 import FeatherIcon from "feather-icons-react";
 import * as yup from "yup";
@@ -26,7 +26,7 @@ export const RegisterForm = () => {
         // Imprimir el objeto values antes de enviar la solicitud
         console.log("Datos a enviar:", values);
 
-        let response = await AxiosClient.post(
+        let response = await AxiosClientWithInterceptors.post(
           "http://localhost:8080/api-sysstock/user/",
           values,
           {
