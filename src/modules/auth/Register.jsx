@@ -13,7 +13,8 @@ export const RegisterForm = () => {
       name: "",
       email: "",
       password: "",
-      role: 1,
+      role: {id:1},
+      status:1
     },
     validationSchema: yup.object().shape({
       name: yup.string().required("Campo obligatorio"),
