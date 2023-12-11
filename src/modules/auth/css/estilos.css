@@ -1,0 +1,27 @@
+
+
+/*cambio del color del navbar*/
+.custom-navbar {
+  background-color: #002E60; /* Color azul */
+}
+
+/* Cambiar el color del texto de la barra de navegación */
+.custom-navbar .nav-link {
+  color: #ffff;
+}
+
+/* Cambiar el color del texto de la marca de la barra de navegación */
+.custom-navbar .navbar-brand {
+  color: #ffff;
+}
+
+.custom-modal{
+  background-color: rgba(130, 129, 129, 0.214);
+}
+
+/*color del top del modal*/
+.custom-modal2{
+  background-color: #002E60;
+  color:#ffff;
+}
+

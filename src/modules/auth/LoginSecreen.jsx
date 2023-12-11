@@ -17,6 +17,7 @@ import "./css/login.css";
 import ForgotPassword from "./ForgotPassword";
 import MainComponent from "./MainComponent";
 import login from "../auth/css/login.css";
+import  Home  from "../auth/Home";
 
 export const LoginScreen = ({ onForgotPasswordClick }) => {
   const { user, dispatch } = useContext(AuthContext);
@@ -52,7 +53,9 @@ export const LoginScreen = ({ onForgotPasswordClick }) => {
             payload: response.data,
           };
           dispatch(action);
-          navigation("/", { replace: true });
+          
+          // Utiliza <Navigate> para redirigir al usuario a la página Home
+          navigation("/home");
         } else {
           // Maneja el error aquí si el código de estado no es 200
           throw new Error(
@@ -95,10 +98,7 @@ export const LoginScreen = ({ onForgotPasswordClick }) => {
     document.title = "SYSTOCK | Login";
   }, []);
 
-  if (user.isLogged) {
-    // Si el usuario ya está autenticado, redirige a la página principal
-    return <Navigate to={"xd.jsx"} />;
-  }
+
   return (
     <>
       <div>
