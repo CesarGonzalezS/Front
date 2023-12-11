@@ -1,9 +1,12 @@
-import { useFormik } from "formik";
+  import { useFormik } from "formik";
 import { useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "./authContext";
 import * as yup from "yup";
-import { AxiosClientWithInterceptors, AxiosClientWithoutInterceptors } from '../../shared/plugins/axios';
+import {
+  AxiosClientWithInterceptors,
+  AxiosClientWithoutInterceptors,
+} from "../../shared/plugins/axios";
 
 import AxiosClient from "../../shared/plugins/axios";
 import Alert from "../../shared/plugins/alerts";
@@ -13,6 +16,7 @@ import RegisterForm from "./Register"; // Importa el componente RegisterForm des
 import "./css/login.css";
 import ForgotPassword from "./ForgotPassword";
 import MainComponent from "./MainComponent";
+import login from "../auth/css/login.css";
 
 export const LoginScreen = ({ onForgotPasswordClick }) => {
   const { user, dispatch } = useContext(AuthContext);
@@ -87,10 +91,8 @@ export const LoginScreen = ({ onForgotPasswordClick }) => {
     setShowForgotPassword(true);
   };
 
-  
-
   useEffect(() => {
-    document.title = "MT | Login";
+    document.title = "SYSTOCK | Login";
   }, []);
 
   if (user.isLogged) {
@@ -99,127 +101,128 @@ export const LoginScreen = ({ onForgotPasswordClick }) => {
   }
   return (
     <>
-    <div>
-      <section className="gradient-form">
-        <Container className="py-5 h-100">
-          <Row className="d-flex justify-content-center align-items-center h-100">
-            <Col className="col-xl-9">
-              <Card className="rounded-3 text-black" id="pruebita2">
-                <Row className="g-0">
-                  {showForgotPassword ? (
-                    // Renderiza el formulario de recuperación de contraseña
-                    <ForgotPassword onBackToLoginClick={handleBackToLoginClick} />
-                  ) : (
-                    <>
-                      <Col
-                        className="col-lg-6 d-flex align-items-center justify-content-center gradient-custom-2"
-                        id="left"
-                      >
-                        {/* Agrega el formulario de registro o de recuperación de contraseña aquí */}
-                        {showForgotPassword ? (
-                          <ForgotPassword onBackToLoginClick={handleBackToLoginClick} />
-                        ) : (
-                          <RegisterForm />
-                        )}
-                      </Col>
-                          <Col className="col-lg-6 d-flex align-items-center justify-content-center gradient-custom-2">
-                            <Card.Body className="p-md mx-md-20">
-                              <div className="text-center">
-                                <img
-                                  src={require("./img/Captura.png")}
-                                  style={{
-                                    width: "40%",
-                                    height: "40%",
-                                    marginTop: "1px",
-                                    display: "block",
-                                    marginLeft: "auto",
-                                    marginRight: "auto",
-                                  }}
-                                  alt="Captura"
-                                />
-                                <div style={{ textAlign: "center" }}>
-                                  <div id="logo"></div>
-                                  <h2>Inicio de sesión</h2>
-                                </div>
+      <div>
+        <section className="gradient-form ">
+          <Container>
+            <Row className="d-flex justify-content-center align-items-center ">
+              <Col>
+                <Card>
+                  <Row>
+                    {showForgotPassword ? (
+                      // Renderiza el formulario de recuperación de contraseña
+                      <ForgotPassword
+                        onBackToLoginClick={handleBackToLoginClick}
+                      />
+                    ) : (
+                      <>
+                        <Col>
+                          {/* Agrega el formulario de registro o de recuperación de contraseña aquí */}
+                          {showForgotPassword ? (
+                            <ForgotPassword
+                              onBackToLoginClick={handleBackToLoginClick}
+                            />
+                          ) : (
+                            <RegisterForm />
+                          )}
+                        </Col>
+                        <Col>
+                          <Card.Body>
+                            <div className="text-center">
+                              <img
+                                src={require("./img/Captura.png")}
+                                style={{
+                                  width: "40%",
+                                  height: "40%",
+                                  marginTop: "1px",
+                                  display: "block",
+                                  marginLeft: "auto",
+                                  marginRight: "auto",
+                                }}
+                                alt="Captura"
+                              />
+                              <div style={{ textAlign: "center" }}>
+                                <div id="logo"></div>
+                                <h2>Inicio de sesión</h2>
                               </div>
-                              <Form onSubmit={formik.handleSubmit}>
-                                <Form.Group className="form-outline mb-1">
-                                  <Form.Label htmlFor="email">Correo:</Form.Label>
-                                  <Form.Control
-                                    placeholder="20213tn00.edu.mx"
-                                    id="email"
-                                    autoComplete="off"
-                                    value={formik.values.email}
-                                    onChange={formik.handleChange}
-                                  />
-                                  {formik.errors.email ? (
-                                    <span className="error-text">
-                                      {formik.errors.email}
-                                    </span>
-                                  ) : null}
-                                </Form.Group>
-    
-                                <Form.Group className="form-outline mb-1">
-                                  <Form.Label htmlFor="password">
-                                    {" "}
-                                    Contraseña:
-                                  </Form.Label>
-                                  <Form.Control
-                                    placeholder="**********"
-                                    id="password"
-                                    type="password"
-                                    autoComplete="off"
-                                    name="password"
-                                    value={formik.values.password}
-                                    onChange={formik.handleChange}
-                                  />
-                                  {formik.errors.password ? (
-                                    <span className="error-text">
-                                      {formik.errors.password}
-                                    </span>
-                                  ) : null}
-                                </Form.Group>
-                                <div className="text-center">
-                                  <a
-                                    href="#"
-                                    onClick={handleForgotPasswordClick}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                            </div>
+                            <Form onSubmit={formik.handleSubmit}>
+                              <Form.Group className="form-outline mb-1">
+                                <Form.Label htmlFor="email">Correo:</Form.Label>
+                                <Form.Control
+                                  placeholder="20213tn00.edu.mx"
+                                  id="email"
+                                  autoComplete="off"
+                                  value={formik.values.email}
+                                  onChange={formik.handleChange}
+                                />
+                                {formik.errors.email ? (
+                                  <span className="error-text">
+                                    {formik.errors.email}
+                                  </span>
+                                ) : null}
+                              </Form.Group>
+
+                              <Form.Group className="form-outline mb-1">
+                                <Form.Label htmlFor="password">
+                                  {" "}
+                                  Contraseña:
+                                </Form.Label>
+                                <Form.Control
+                                  placeholder="**********"
+                                  id="password"
+                                  type="password"
+                                  autoComplete="off"
+                                  name="password"
+                                  value={formik.values.password}
+                                  onChange={formik.handleChange}
+                                />
+                                {formik.errors.password ? (
+                                  <span className="error-text">
+                                    {formik.errors.password}
+                                  </span>
+                                ) : null}
+                              </Form.Group>
+                              <div className="text-center">
+                                <a
+                                  href="#"
+                                  onClick={handleForgotPasswordClick}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  Olvidé mi contraseña
+                                </a>
+                              </div>
+
+                              <Form.Group className="form-outlile mb-4">
+                                <div className="text-center pt-1 pb-1">
+                                  <Button
+                                    variant="secondary"
+                                    className="btn-hover gradient-custom-2"
+                                    type="submit"
+                                    id="botonIngresar"
+                                    disabled={!(formik.isValid && formik.dirty)}
                                   >
-                                    Olvidé mi contraseña
-                                  </a>
+                                    Iniciar sesión
+                                    <FeatherIcon icon={"log-in"}>
+                                      &nbsp; Iniciar sesión
+                                    </FeatherIcon>
+                                  </Button>
                                 </div>
-    
-                                <Form.Group className="form-outlile mb-4">
-                                  <div className="text-center pt-1 pb-1">
-                                    <Button
-                                      variant="secondary"
-                                      className="btn-hover gradient-custom-2"
-                                      type="submit"
-                                      id="botonIngresar"
-                                      disabled={!(formik.isValid && formik.dirty)}
-                                    >
-                                      Iniciar sesión
-                                      <FeatherIcon icon={"log-in"}>
-                                        &nbsp; Iniciar sesión
-                                      </FeatherIcon>
-                                    </Button>
-                                  </div>
-                                </Form.Group>
-                              </Form>
-                            </Card.Body>
-                          </Col>
-                        </>
-                      )}
-                    </Row>
-                  </Card>
-                </Col>
-              </Row>
-            </Container>
-          </section>
-        </div>
-      </>
-    );
-                                  };
+                              </Form.Group>
+                            </Form>
+                          </Card.Body>
+                        </Col>
+                      </>
+                    )}
+                  </Row>
+                </Card>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+      </div>
+    </>
+  );
+};
 
 export default LoginScreen;

@@ -1,0 +1,16 @@
+ /* Estilos para el botón de inicio de sesión */
+ #botonRegistrar {
+    width: 400px;
+    background-color: #009574;
+  }
+
+  #registroCard {
+    background-color: #002E60;
+  }
+  
+  #registroCard h2,
+#registroCard h4,
+#registroCard label,
+#registroCard span {
+  color: white;
+}

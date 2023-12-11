@@ -1,0 +1,76 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa; /* Color de fondo */
+  }
+  
+  /* Estilos del formulario */
+  .gradient-form {
+    background:#f8f9fa; /* Gradiente de fondo */
+    color: #fff; /* Color del texto en el formulario */
+    
+  }
+  
+  .card {
+    background-color: rgba(207, 207, 207, 0.9); /* Color de fondo de la tarjeta */
+  }
+  
+
+  
+  /* Estilos para los campos de formulario */
+  .form-outline {
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos para el botón de inicio de sesión */
+  #botonIngresar {
+    width: 100%;
+    background-color: #009574;
+  }
+  
+  /* Estilos para el botón de inicio de sesión */
+
+  /* Estilos para el enlace de "Olvidé mi contraseña" */
+  a {
+    color: #fff; /* Color del enlace */
+  }
+  
+  a:hover {
+    text-decoration: underline; /* Subrayar enlace al pasar el ratón */
+  }
+  
+  /* Estilos para la imagen */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  /* Estilos para el contenedor principal */
+  .container {
+    height: 100vh; /* Altura del 100% del viewport */
+    width: 10vh;
+  }
+
+  :root {
+    --color-fondo-claro: #ffffff;
+    --color-texto-claro: #333333;
+    --color-fondo-oscuro: #1f1f1f;
+    --color-texto-oscuro: #ffffff;
+  }
+
+  
+  body {
+    background-color: var(--color-fondo-claro);
+    color: var(--color-texto-claro);
+  }
+  
+  body.modo-oscuro {
+    background-color: var(--color-fondo-oscuro);
+    color: var(--color-texto-oscuro);
+  }
+  
+  
+
+  

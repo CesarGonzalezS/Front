@@ -1,6 +1,9 @@
 import React from "react";
 import { useFormik } from "formik";
-import { AxiosClientWithInterceptors, AxiosClientWithoutInterceptors } from '../../shared/plugins/axios';
+import {
+  AxiosClientWithInterceptors,
+  AxiosClientWithoutInterceptors,
+} from "../../shared/plugins/axios";
 import Alert from "../../shared/plugins/alerts";
 import FeatherIcon from "feather-icons-react";
 import * as yup from "yup";
@@ -13,15 +16,15 @@ export const RegisterForm = () => {
       name: "",
       email: "",
       password: "",
-      role: {id:1},
-      status:1
+      role: { id: 1 },
+      status: 1,
     },
     validationSchema: yup.object().shape({
       name: yup.string().required("Campo obligatorio"),
       email: yup.string().required("Campo obligatorio"),
       password: yup.string().required("Campo obligatorio"),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values,{ resetForm }) => {
       try {
         // Imprimir el objeto values antes de enviar la solicitud
         console.log("Datos a enviar:", values);
@@ -34,10 +37,9 @@ export const RegisterForm = () => {
               "Content-Type": "application/json",
             },
           }
-        ).catch(error => {
+        ).catch((error) => {
           console.error("Error en la solicitud Axios:", error);
         });
-        
 
         console.log("Respuesta del servidor:", response);
 
@@ -50,6 +52,8 @@ export const RegisterForm = () => {
             confirmButtonColor: "#3085d6",
             confirmButtonText: "Aceptar",
           });
+          resetForm();
+
         } else {
           // Error en el registro
           Alert.fire({
@@ -82,6 +86,9 @@ export const RegisterForm = () => {
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Aceptar",
         });
+
+        resetForm();
+
       }
     },
   });
@@ -89,20 +96,15 @@ export const RegisterForm = () => {
   return (
     <>
       <div>
-        <section className=" gradient-form">
+        <section>
           <Container>
-            <Row className="d-flex justify-content-center align-items-center h-130">
-              <Col className="col-xl-70 h-100 w-100 d-flex align-items-center justify-content-center">
-                <Card
-                  className="rounded-1  text-black"
-                  id="pruebita2"
-                  style={{ height: "100%" , width:"100%"}}
-                >
-                  <Card.Body className="p-md mx-md-20 ">
-                    <div className="text-center">
-                      <div id="logo" className=""></div>
-                      <h2 className="mb-3">¿Eres nuevo aquí?</h2>
-                      <h4 className="mb-5">
+            <Row>
+              <Col>
+                <Card>
+                  <Card.Body  id="registroCard" style={{ height: "570px" }}>
+                    <div className="text-center mt-4">
+                      <h2>¿Eres nuevo aquí?</h2>
+                      <h4 className="form-outline mt-5">
                         Regístrate para poder empezar a hacer uso de nuestro
                         Sistema
                       </h4>
@@ -111,7 +113,7 @@ export const RegisterForm = () => {
                       onSubmit={formik.handleSubmit}
                       className="d-flex flex-column align-items-center"
                     >
-                      <Form.Group className="form-outline ">
+                      <Form.Group className="form-outline mt-3">
                         <Form.Control
                           placeholder="20213TN065@Utez.edu.mx"
                           id="email"
@@ -131,7 +133,7 @@ export const RegisterForm = () => {
                         )}
                       </Form.Group>
 
-                      <Form.Group className="form-outline mb-1">
+                      <Form.Group className="form-outline mt-1">
                         <Form.Control
                           placeholder="Nombre"
                           id="name"
@@ -149,7 +151,7 @@ export const RegisterForm = () => {
                         )}
                       </Form.Group>
 
-                      <Form.Group className="form-outline mb-3">
+                      <Form.Group className="form-outline mt-1">
                         <Form.Control
                           placeholder="**********"
                           id="password"
@@ -168,12 +170,13 @@ export const RegisterForm = () => {
                         )}
                       </Form.Group>
 
-                      <Form.Group className="form-outlile mb-5">
-                        <div className="text-center  pb-1">
+                      <Form.Group className="form-outlile mb-4">
+                        <div className="text-center pt-1 pb-1">
                           <Button
                             variant="secondary"
-                            className="btn-hover gradient-custom-3"
+                            className="btn-hover gradient-custom-2"
                             type="submit"
+                            id="botonRegistrar"
                             disabled={!(formik.isValid && formik.dirty)}
                           >
                             Registrarse
@@ -183,6 +186,8 @@ export const RegisterForm = () => {
                           </Button>
                         </div>
                       </Form.Group>
+
+                      
                     </Form>
                   </Card.Body>
                 </Card>{" "}
