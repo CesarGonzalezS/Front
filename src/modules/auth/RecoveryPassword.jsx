@@ -1,64 +1,64 @@
 import React, { useState } from "react";
-import { Card, Container, Figure, Form, Button } from "react-bootstrap";
+import { Card, Form, Button } from "react-bootstrap";
 import FeatherIcon from "feather-icons-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import Alert from "../../shared/plugins/alerts";
 import { AxiosClientWithInterceptors } from "../../shared/plugins/axios";
+import Logo from "../auth/img/Captura.png";
 
+const RecoveryPassword = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { email } = location.state || {};
 
-    const RecoveryPassword = () => {
-        const navigate = useNavigate();
-        const location = useLocation();
-        const { email } = location.state || {};
-      
-        const [loading, setLoading] = useState(false);
-      
-        const formik = useFormik({
-          initialValues: {
-            email: email || "",
-            secretPass: "",
-            newPassword: "",
-          },
-          validationSchema: yup.object().shape({
-            newPassword: yup
-              .string()
-              .required("Campo Obligatorio")
-              .min(8, "Mínimo 8 Caracteres"),
-            secretPass: yup.string().required("Campo Obligatorio"),
-          }),
-          onSubmit: async (values) => {
-            setLoading(true);
-            try {
-              const tokenReset = localStorage.getItem("reset_password");
-              const response = await AxiosClientWithInterceptors.put(
-                "/recovery/updatePassword",
-                values,
-                {
-                  headers: {
-                    Authorization: `Bearer ${tokenReset}`,
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-      
-              console.log("Respuesta del servidor:", response);
-      
-              if (!response.data.error) {
-                Alert.fire({
-                  title: "Contraseña Actualizada",
-                  text: "Ya puedes iniciar Sesión con tu nueva contraseña",
-                  icon: "success",
-                  confirmButtonColor: "#3085d6",
-                  confirmButtonText: "Aceptar",
-                });
-      
-                // Redirige a la pantalla de inicio de sesión después de una actualización exitosa
-                navigate("/LoginScreen");
-              } else {
-                throw new Error(response.data.error);
-              }
+  const [loading, setLoading] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      email: email || "",
+      secretPass: "",
+      newPassword: "",
+    },
+    validationSchema: yup.object().shape({
+      newPassword: yup
+        .string()
+        .required("Campo Obligatorio")
+        .min(8, "Mínimo 8 Caracteres"),
+      secretPass: yup.string().required("Campo Obligatorio"),
+    }),
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        const tokenReset = localStorage.getItem("reset_password");
+        const response = await AxiosClientWithInterceptors.put(
+          "/recovery/updatePassword",
+          values,
+          {
+            headers: {
+              Authorization: `Bearer ${tokenReset}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        console.log("Respuesta del servidor:", response);
+
+        if (!response.data.error) {
+          Alert.fire({
+            title: "Contraseña Actualizada",
+            text: "Ya puedes iniciar Sesión con tu nueva contraseña",
+            icon: "success",
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Aceptar",
+          });
+
+          // Redirige a la pantalla de inicio de sesión después de una actualización exitosa
+          navigate("/LoginScreen");
+        } else {
+          throw new Error(response.data.error);
+        }
       } catch (error) {
         console.error("Error en la solicitud:", error.message);
 
@@ -89,18 +89,33 @@ import { AxiosClientWithInterceptors } from "../../shared/plugins/axios";
   });
 
   return (
-    <div>
-      <Card className="bg-secondary">
-        <Card.Body className="p-md-4 mx-md-5">
-          <div className="d-flex align-items-center justify-content-center ">
-            <Figure className="mx-1 mb-2"></Figure>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+        backgroundColor: "#f0f0f0",
+      }}
+    >
+      <Card
+        className="bg-secondary"
+        style={{
+          width: "500px",
+          height: "500px",
+        }}
+      >
+<Card.Body style={{ backgroundColor: '#002E60' }}>
+          <div className="d-flex align-items-center justify-content-center">
             <div>
-              <h3 className="mt-1 mb-3 pb-2 text-white"> | Cuenta</h3>
+              <img src={Logo} alt="Logo" style={{ height: "100px" }} />
+              <h4 className="mt-2 pb-2 text-white">Recupera tu Cuenta</h4>
             </div>
           </div>
-          <h4 className="mt-1 mb-4 text-white text-center">
-            Recuperar Contraseña
-          </h4>
+          <h5 className="text-white text-center">
+            Te enviamos un correo con la palabra secreta para restablecer la
+            contraseña
+          </h5>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Group className="form-outline mb-4">
               <Form.Label htmlFor="secretPass" className="text-white mb-0">
@@ -111,12 +126,9 @@ import { AxiosClientWithInterceptors } from "../../shared/plugins/axios";
                 autoComplete="off"
                 name="secretPass"
                 style={{
-                  backgroundColor: "transparent",
                   border: "none",
-                  borderBottom: "3px solid #1971AB",
-                  color: "white",
+                  borderBottom: "1px solid #1971AB",
                 }}
-                className="mb-3"
                 value={formik.values.secretPass}
                 onChange={formik.handleChange}
               />
@@ -124,6 +136,7 @@ import { AxiosClientWithInterceptors } from "../../shared/plugins/axios";
                 <span className="error-text">{formik.errors.secretPass}</span>
               ) : null}
             </Form.Group>
+            <h5 className=" text-white ">Ingresa tu nueva contrasena</h5>
             <Form.Group className="form-outline mb-4">
               <Form.Label htmlFor="newPassword" className="text-white mb-0">
                 Nueva contraseña
@@ -135,10 +148,8 @@ import { AxiosClientWithInterceptors } from "../../shared/plugins/axios";
                 name="newPassword"
                 className="mb-3"
                 style={{
-                  backgroundColor: "transparent",
                   border: "none",
-                  borderBottom: "3px solid #1971AB",
-                  color: "white",
+                  borderBottom: "2px solid #1971AB",
                 }}
                 value={formik.values.newPassword}
                 onChange={formik.handleChange}
@@ -147,12 +158,19 @@ import { AxiosClientWithInterceptors } from "../../shared/plugins/axios";
                 <span className="error-text">{formik.errors.newPassword}</span>
               ) : null}
             </Form.Group>
-            <Form.Group className="form-outline mb-4">
-              <div className="text-center pt-4">
+            <Form.Group className="form-outline">
+              <div className="text-center">
                 <Button
                   variant="primary"
-                  className="btn-hover "
+                  className="btn-hover"
                   type="submit"
+                  style={{
+                    width: "400px",
+                    height: "50px",
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    marginTop: "10px",
+                  }}
                   disabled={!(formik.isValid && formik.dirty)}
                 >
                   <FeatherIcon icon={"log-in"} />

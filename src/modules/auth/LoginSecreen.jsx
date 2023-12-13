@@ -18,6 +18,7 @@ import ForgotPassword from "./ForgotPassword";
 import MainComponent from "./MainComponent";
 import login from "../auth/css/login.css";
 import  Home  from "../auth/Home";
+import Equipos from "./Equipos";
 
 export const LoginScreen = ({ onForgotPasswordClick }) => {
   const { user, dispatch } = useContext(AuthContext);
@@ -62,7 +63,11 @@ export const LoginScreen = ({ onForgotPasswordClick }) => {
             `Error en la solicitud. Código de estado: ${response.statusCode}`
           );
         }
-      } catch (error) {
+
+        console.log(values);
+
+      } 
+      catch (error) {
         // Maneja el error de Axios aquí
         if (error.response) {
           // El servidor respondió con un código de estado diferente de 2xx
@@ -162,7 +167,7 @@ export const LoginScreen = ({ onForgotPasswordClick }) => {
                                 ) : null}
                               </Form.Group>
 
-                              <Form.Group className="form-outline mb-1">
+                              <Form.Group className="form-outline mb-5">
                                 <Form.Label htmlFor="password">
                                   {" "}
                                   Contraseña:

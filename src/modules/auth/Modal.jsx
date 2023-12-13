@@ -11,7 +11,6 @@ import { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es"; // Importa el idioma español
 import "../auth/css/estilos.css";
 
-registerLocale("es", es);
 
 const CustomModal = (props) => {
   const [validated, setValidated] = useState(false);

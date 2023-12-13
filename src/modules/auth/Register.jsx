@@ -54,6 +54,7 @@ export const RegisterForm = () => {
           });
           resetForm();
 
+          console.log(values)
         } else {
           // Error en el registro
           Alert.fire({

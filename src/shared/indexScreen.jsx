@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-export const IndexScreen = () => {
+const IndexScreen = () => {
   useEffect(() => {
     // Simulamos el cambio de ruta después de un tiempo (puedes ajustar el tiempo según tus necesidades)
     const timeoutId = setTimeout(() => {
-      window.location.href = "/auth"; // Redirige a la página de inicio de sesión
-    }, 30);
+      // Redirige a la página de inicio de sesión usando Navigate
+      return <Navigate to="/auth" />;
+    }, 30); // Redirige después de 3 segundos (ajusta según tus necesidades)
 
     // Limpieza del temporizador para evitar fugas de memoria
     return () => clearTimeout(timeoutId);
@@ -15,3 +16,5 @@ export const IndexScreen = () => {
   // No se renderiza nada en la pantalla de IndexScreen
   return null;
 };
+
+export default IndexScreen;

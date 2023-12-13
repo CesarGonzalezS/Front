@@ -1,3 +1,4 @@
+// AppRouter.jsx
 import React, { useContext } from "react";
 import {
   BrowserRouter as Router,
@@ -7,8 +8,8 @@ import {
 } from "react-router-dom";
 import { LoginScreen } from "../modules/auth/LoginSecreen";
 import { AuthContext } from "../modules/auth/authContext";
-import { IndexScreen } from "./indexScreen";
-import RecoveryPassword from "../modules/auth/RecoveryPassword"; // Asegúrate de importar correctamente RecoveryPassword
+import IndexScreen from "./indexScreen";
+import RecoveryPassword from "../modules/auth/RecoveryPassword";
 import ForgotPassword from "../modules/auth/ForgotPassword";
 import Home from "../modules/auth/Home";
 import Modal from "../modules/auth/Modal";
@@ -17,6 +18,7 @@ import Perfil from "../modules/auth/Perfil";
 import Prestamo from "../modules/auth/Prestamos";
 import Salir from "../modules/auth/Salir";
 import Stock from "../modules/auth/Stock";
+import EquiposList from "../modules/auth/Equipos";
 
 export const AppRouter = () => {
   const { user } = useContext(AuthContext);
@@ -28,26 +30,18 @@ export const AppRouter = () => {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/recoverypassword" element={<RecoveryPassword />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/modal" element={<Modal />} />
-        <Route path="/navbar" element={<Nabvar />} />
-        <Route path="/perfil" element={<Perfil />} />
-        <Route path="/prestamo" element={<Prestamo />} />
-        <Route path="/salir" element={<Salir />} />
-        <Route path="/stock" element={<Stock />} />
-
-        {/* ... Otras rutas ... */}
+        <Route path="/equipos" element={<EquiposList />} />
 
         <Route
           path="/*"
-          element={(() => {
-            // Si no está logueado, puedes redirigirlo a otra parte o renderizar algo diferente
-            return null;
-          })()}
+          element={
+            <React.Fragment>
+              {user ? <Navigate to="/home" /> : <Navigate to="/auth" />}
+            </React.Fragment>
+          }
         />
 
-        <Route path="/" element={<IndexScreen />} />
-
-        <Route path="*" element={<>404</>} />
+        <Route path="*" element={<div>404</div>} />
       </Routes>
     </Router>
   );
