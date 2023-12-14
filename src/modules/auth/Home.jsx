@@ -3,15 +3,14 @@ import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useState } from 'react';
-import CustomTable from './TablaEquipos';
 import "../auth/css/home.css"; // Cambiado el nombre de la importación
 
 
 export const Home = ({showModal}) => {
-  const [modalShow, setModalShow] = useState(false);
 
   return (
     <>
+
       <nav className="navbar navbar-expand-lg navbar-light custom-navbar">
         <div className="container-fluid">
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,13 +38,7 @@ export const Home = ({showModal}) => {
         <button className="btn btn-outline-success" type="submit">Search</button>
       </form>
 
-      <div className="mt-4"> {/* Espacio para separar el navbar del contenido */}
-        <Routes>
-          {/* Define las rutas secundarias aquí */}
-          <Route path="/equipos" element={<CustomTable />} />
-          {/* Agrega más rutas según sea necesario */}
-        </Routes>
-      </div>
+      
     </>
   );
 };

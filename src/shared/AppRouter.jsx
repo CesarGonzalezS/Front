@@ -12,8 +12,6 @@ import IndexScreen from "./indexScreen";
 import RecoveryPassword from "../modules/auth/RecoveryPassword";
 import ForgotPassword from "../modules/auth/ForgotPassword";
 import Home from "../modules/auth/Home";
-import Modal from "../modules/auth/Modal";
-import Nabvar from "../modules/auth/Nabvar";
 import Perfil from "../modules/auth/Perfil";
 import Prestamo from "../modules/auth/Prestamos";
 import Salir from "../modules/auth/Salir";

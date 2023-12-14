@@ -2,17 +2,11 @@ import React, { useState, useEffect } from "react";
 import { AxiosClientWithInterceptors } from "../../shared/plugins/axios";
 import Home from "./Home";
 import Table from "react-bootstrap/Table";
-import CustomModal from "./Modal"; // Importa el componente CustomModal
+import EquiposModalButton from './EquiposModalButton'; // Importa el nuevo componente
 
 
 const EquiposList = () => {
   const [equipos, setEquipos] = useState([]);
-  const [showModal, setShowModal] = useState(false); // Nuevo estado para controlar la visibilidad del modal
-
-  
-  const handleShowModal = () => {
-    setShowModal(true);
-  };
 
   useEffect(() => {
     const fetchEquipos = async () => {
@@ -53,19 +47,12 @@ const EquiposList = () => {
   return (
     <>
       <Home />
-      <CustomModal show={showModal} onHide={setShowModal} />
 
       <div>
-      <div className="d-flex align-items-center justify-content-between">
+        <div className="d-flex align-items-center justify-content-between">
           <h2>Lista de Equipos</h2>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={handleShowModal} // Usa la función para mostrar el modal
+          <EquiposModalButton />
 
-          >
-            Agregar Equipo
-          </button>
         </div>
         {equipos.length > 0 ? (
           <Table striped bordered hover className="shadow">
@@ -74,12 +61,11 @@ const EquiposList = () => {
                 <th>ID</th>
                 <th>Equipo</th>
                 <th>Nombre</th>
-
-                <th>Descripction</th>
+                <th>Descripción</th>
                 <th>Fecha</th>
-                <th>Categoria</th>
+                <th>Categoría</th>
                 <th>Estado</th>
-                <th>Accion</th>
+                <th>Acción</th>
               </tr>
             </thead>
             <tbody>
@@ -88,15 +74,15 @@ const EquiposList = () => {
                   <td>{equipo.id}</td>
 
                   <td>
-                  {equipo.profilePhoto && typeof equipo.profilePhoto === 'string' && (
-  <img
-    src={`data:image/png;base64,${equipo.profilePhoto}`}
-    alt={`Imagen ${equipo.id}`}
-    style={{ maxWidth: "70px", maxHeight: "70px" }}
-  />
-)}
-    </td>
-    
+                    {equipo.profilePhoto &&
+                      typeof equipo.profilePhoto === "string" && (
+                        <img
+                          src={`data:image/png;base64,${equipo.profilePhoto}`}
+                          alt={`Imagen ${equipo.id}`}
+                          style={{ maxWidth: "70px", maxHeight: "70px" }}
+                        />
+                      )}
+                  </td>
 
                   <td>{equipo.name}</td>
                   <td>{equipo.description}</td>
